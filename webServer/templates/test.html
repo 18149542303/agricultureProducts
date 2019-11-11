@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>测试</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="/static/js/jquery.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <input type="text" name="key" id="key">
+        <button onclick="submit()">提交</button>
+        <script>
+            function submit() {
+                temp_token = localStorage.getItem("agricultureProducts_token");
+                $.ajax({
+                    type: "post",
+                    url: "http://176.136.4.6:8000/v1/users/?key="+$('#key').val(),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({"value": 'kirito', "key": "nickname"}),
+                    beforeSend: function (request) { 
+                        request.setRequestHeader("Authorization", temp_token);
+                        },
+                    success: function (response) {
+                        console.log(response)
+                        if ( response.code == 200 ){
+                            alert('success')
+                            // refer_url = document.referrer
+                            // if (refer_url.search("176.136.4.6") != -1){
+                            //     window.location = refer_url;
+                            // }else{
+                            //     window.location =  "/";
+                            // }
+                        }else{
+                            alert('error')
+                        }
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
